@@ -13,4 +13,4 @@ CREATE TABLE products (
   raw_row DECIMAL(10,4) NULL,
   PRIMARY KEY (position)
 );
-select * from top_albums;
+select * from products;

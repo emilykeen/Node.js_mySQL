@@ -18,9 +18,13 @@ connection.connect(function(err) {
 
 var start = function() {
     connection.query("SELECT * FROM products", function(err, results) {
-        if (err) throw err;
-        console.log(results);
-
+        for (var i = 0; i < results.length; i++) {
+            console.log("ID: " + results[i].item_id + "|| Product name: " + results[i].product_name +
+                "|| Department Name: " +
+                results[i].department_name + "|| Price: " +
+                results[i].price + "|| Stock Quanity: " +
+                results[i].stock_quanity);
+        }
         //put query "select * From products;"
         inquirer.prompt([{
             name: "ID",
@@ -37,26 +41,25 @@ var start = function() {
                 if (results[i].item_id == answer.ID) {
                     chosenItem = results[i];
                     console.log(chosenItem);
-                    var quantity = chosenItem.stock_quanity - answer.quantity;
-                    console.log(quantity);
                     if (chosenItem.stock_quanity >= answer.quantity) {
+                        var quantity = +chosenItem.stock_quanity - +answer.quantity;
                         connection.query("UPDATE products SET ? WHERE ?", [{
-                            quantity: quantity
+                            stock_quanity: quantity
                         }, {
-                            ID: answer.ID
+                            item_id: answer.ID
                         }], function(err, res) {
-                            console.log("Your Total is:"+ chosenItem.price * answer.quantity);
+                            console.log("Your Total is: $" + chosenItem.price * answer.quantity);
 
 
                         });
-                    }else{
+                    } else {
                         console.log("Insufficient quantity!");
                     }
                 }
             }
 
 
-            //start();
+            start();
         })
     });
 }
