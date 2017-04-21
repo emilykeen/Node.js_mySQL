@@ -40,7 +40,6 @@ var start = function() {
             for (var i = 0; i < results.length; i++) {
                 if (results[i].item_id == answer.ID) {
                     chosenItem = results[i];
-                    console.log(chosenItem);
                     if (chosenItem.stock_quanity >= answer.quantity) {
                         var quantity = +chosenItem.stock_quanity - +answer.quantity;
                         connection.query("UPDATE products SET ? WHERE ?", [{
@@ -53,7 +52,7 @@ var start = function() {
 
                         });
                     } else {
-                        console.log("Insufficient quantity!");
+                        console.log("Insufficient quantity! Try again");
                     }
                 }
             }

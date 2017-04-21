@@ -84,15 +84,13 @@ var addInventory = function() {
             for (var i = 0; i < results.length; i++) {
                 if (results[i].item_id == answer.choice) {
                     chosenItem = results[i];
-                    console.log(chosenItem);
                     var quantity = +chosenItem.stock_quanity + +answer.quantity;
-                    console.log(quantity);
                     connection.query("UPDATE products SET ? WHERE ?", [{
                         stock_quanity: quantity
                     }, {
                         item_id: answer.choice
                     }], function(err, res) {
-                        console.log("you set " + chosenItem.item_id + "'s quanity to" + quantity);
+                        console.log("you set ID# " + chosenItem.item_id + "'s quanity to " + quantity);
                         runSearch();
 
                     });
@@ -136,7 +134,7 @@ var newProduct = function() {
             stock_quanity: answer.starting_quantity
         }, function(err) {
             if (err) throw err;
-            console.log("Your auction was created successfully!");
+            console.log("Your item was created successfully!");
             runSearch();
         });
     });
